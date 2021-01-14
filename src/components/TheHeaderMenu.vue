@@ -1,5 +1,9 @@
 <template>
     <div class="header-menu">
+        <!-- Temporary roll button -->
+        <div class="roll-button" @click="doRoll">
+            Roll
+        </div>
         <div class="header-menu__button" @click="showMenu = !showMenu">&#9776;</div>
         <ul class="header-menu-list" v-show="showMenu">
             <li class="header-menu-list__item">
@@ -45,7 +49,25 @@ export default {
         dict () {
             return this.$store.state.dict
         },
-        ...mapGetters(['web3'])
+        ...mapGetters(['web3', 'gameCurrent'])
+    },
+    methods: {
+        // Temporary roll button action
+        async doRoll () {
+            const contractHEXAddress = window.tronWeb.address.toHex(this.gameCurrent.contractAddress)
+            let contract = await window.tronWeb.contract().at(contractHEXAddress)
+
+            contract.rollRound().send({
+                callValue: 0,
+                shouldPollResponse: true
+            })
+            .then(response => {
+                console.log(response)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
     }
 }
 </script>
@@ -53,6 +75,26 @@ export default {
 <style lang="scss">
 .header-menu {
     position: relative;
+    /* Temporary roll button */
+    .roll-button {
+        position: absolute;
+        top: 25px;
+        left: 200px;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 5px;
+        text-align: center;
+        font-size: 20px;
+        border: 1px solid blue;
+        color: blue;
+        &:hover {
+            cursor: pointer;
+            background-color: blue;
+            border-color: white;
+            color: white;
+        }
+    }
     &__button {
         position: absolute;
         top: 0;
