@@ -2,7 +2,8 @@ module.exports = {
     tronscanAddressUrl: 'https://shasta.tronscan.io/#/contract/',
     metamaskNetId: 3,
     games: [
-        {   
+        {
+            type: 'w5x36',   
             reqNumbers: 5,
             padSize: 36,
             minWinMatch: 2,

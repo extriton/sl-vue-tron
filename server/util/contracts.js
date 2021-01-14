@@ -4,6 +4,8 @@ const Game = require('../models/Game')
 const Member = require('../models/Member')
 // const drawAllContracts = require('./drawing').drawAllContracts
 
+// const Contract = require('../classes/contract')
+
 const TronWeb = require('tronweb')
 const HttpProvider = TronWeb.providers.HttpProvider
 const fullNode = new HttpProvider(gameSettings.fullNode)
@@ -23,6 +25,13 @@ module.exports = {
 async function init(io, cb) {
 
     gameSettings.io = io
+    
+    /*
+    const tmpContract = new Contract('w5x36', io)
+    tmpContract._showSettings()
+
+    return
+    */
 
     // Define contracts connections and init contract phases
     for (const game of gameSettings.games) {
@@ -225,12 +234,13 @@ async function saveGame(_game, _contract, id) {
 
     // Drawing or closed game
     if (game.status == 1 || game.status == 2) {
-        game.winNumbers         = gameWinNumbers
+        game.winNumbers         = gameWinNumbers._winNumbers
     }
 
     // Closed game
     if (game.status == 2) {
-        game.winners            = gameWinners    
+        for (let i = 0; i < gameWinners._winners.length; i++)
+            game.winners[i] = parseInt(gameWinners._winners[i]._hex)
     }
     
     await game.save()
@@ -267,7 +277,8 @@ async function saveMember(_game, _contract, game_id, id) {
     if (game.status == 2) {
         member.winNumbers       = game.winNumbers
         member.matchNumbers     = util.findMatch(memberInfo._numbers, game.winNumbers)
-        member.prize            = +tronWeb.fromSun(memberInfo._prize._hex)
+        //member.prize            = +tronWeb.fromSun(memberInfo._prize._hex)
+        member.prize            = parseInt(memberInfo._prize._hex) / 1000000
         member.payout           = 1
     }
 

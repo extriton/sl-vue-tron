@@ -13,7 +13,7 @@
                     type="text" 
                     v-model="playerAddress" 
                     maxlength="42" 
-                    placeholder="0xXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
+                    placeholder="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
             <div class="m-btn btn-update" @click="doUpdateHistory">
                 <i class="fa fa-refresh"></i>
             </div>
@@ -99,7 +99,7 @@ export default {
             return util.formatNumber(value, int, frac)
         },
         updateHistory () {
-            this.$socket.emit('getPlayerHistory', { type: this.gameCurrent.type, address: this.playerAddress, page: this.page })
+            this.$socket.emit('getPlayerHistory', { type: this.gameCurrent.type, address: window.tronWeb.address.toHex(this.playerAddress), page: this.page })
         },
         onChangePage (page) {
             this.page = page
