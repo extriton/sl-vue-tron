@@ -26,7 +26,7 @@ const io = require('socket.io').listen(server, { secure: false, rejectUnauthoriz
 // Run cryptocurrency updater
 cryptocurrency.run()
 
-const SYNC_INTERVAL = 30 * 60 * 1000                        // Synchronize every 30 minutes
+const SYNC_INTERVAL = 5 * 60 * 1000                        // Synchronize every 30 minutes
 const CLEAR_COLLECTION = false
 
 // Init contracts data

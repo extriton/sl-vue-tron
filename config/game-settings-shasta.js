@@ -3,7 +3,7 @@ module.exports = {
     metamaskNetId: 3,
     games: [
         {
-            type: 'w5x36',   
+            /* type: 'w5x36',    */
             reqNumbers: 5,
             padSize: 36,
             minWinMatch: 2,

@@ -169,10 +169,7 @@ export default new Vuex.Store({
           } else {
             console.log("tronLink currently selects the side chain")
           }
-
-          console.log(e)
-          commit('changeWeb3Coinbase', e.data.message.data.data.address)
-
+          
           // Костыль, надо придумать по другому определять main grid от других сетей
           if (e.data.message.data.data.node && e.data.message.data.data.node.fullNode === 'https://api.trongrid.io') {
             commit('changeWeb3NetworkId', 1)
@@ -204,51 +201,7 @@ export default new Vuex.Store({
 
         }
       })
-      
-      /*
-      // Check Metamask installation
-      const provider = await detectEthereumProvider()
-      if (!provider || provider !== window.ethereum) return
 
-      // Check Metamask installation (old)
-      // if (!window.ethereum || !window.ethereum.isMetaMask) return
-      
-      // Set Metamask events handlers
-      window.ethereum.on('chainChanged', handleChainChanged)
-      window.ethereum.on('accountsChanged', handleAccountsChanged)
-
-      // Retrieve Metamask chainId
-      window.ethereum.request({ method: 'eth_chainId' }).then(handleChainChanged).catch(e => { console.log(e) })
-
-      // Retrieve Metamask accounts
-      window.ethereum.request({ method: 'eth_requestAccounts' })
-      .then(() => {
-        window.ethereum.request({ method: 'eth_accounts' }).then(handleAccountsChanged).catch(e => { console.log(e) })
-      })
-      .catch(err => {
-        if (err.code === 4001) {
-          console.log('Please connect to MetaMask.')
-        } else {
-          console.error(err)
-        }
-      })
-
-      // Metamask events handlers
-      function handleChainChanged (chainId) {
-        if (typeof chainId === 'object') chainId = chainId.result
-        commit('changeWeb3NetworkId', chainId)
-      }
-
-      function handleAccountsChanged (accounts) {
-        console.log(accounts)
-        if (!Array.isArray(accounts)) accounts = accounts.result
-        if (accounts.length === 0) {
-          commit('changeWeb3Coinbase', null)
-        } else {
-          commit('changeWeb3Coinbase', accounts[0])
-        }
-      }
-      */
     }
     
   }

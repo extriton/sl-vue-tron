@@ -140,6 +140,7 @@ export default {
     font-size: 1em;
     background: linear-gradient(to right, black -50%, rgb(23, 60, 78) 150%);
     text-align: left;
+    margin-bottom: 100px;
     .player-history-caption {
         color: #CC6610;
         position: relative;

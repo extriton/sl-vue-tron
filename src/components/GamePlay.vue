@@ -301,7 +301,7 @@ export default {
                 return
             }
             */
-
+            console.log(this.web3.coinbase)
             if (!this.web3.coinbase) {
                 this.newNotify({ type: 'error', title: '<b>:: Play ::</b>', text: `Metamask is locked!` })
                 return
@@ -329,6 +329,7 @@ export default {
             let contract = await window.tronWeb.contract().at(contractHEXAddress)
 
             contract.buyTicket(trNumbers).send({
+                feeLimit: window.tronWeb.toSun(100),
                 callValue: window.tronWeb.toSun(this.gameCurrent.ticketPrice),
                 shouldPollResponse: true
             })
@@ -338,78 +339,7 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-            
-            /*
-            const parameter = [
-                {
-                    type: `uint8[${this.gameCurrent.reqNumbers}]`,
-                    value: trNumbers
-                }
-            ]
-            const options = {
-                feeLimit:100000000,
-                callValue: 35000000,
-                // tokenValue: 35000000,
-                // tokenValue:10,
-                // tokenId:1000001
-            }
-            console.log(window.tronWeb)
-            let transaction
-            try {
-                transaction = await tronWeb.transactionBuilder.triggerSmartContract(
-                    window.tronWeb.address.toHex(this.gameCurrent.contractAddress),
-                    `transfer(uint8[${this.gameCurrent.reqNumbers}])`,
-                    options,
-                    parameter,
-                    window.tronWeb.address.toHex(this.web3.coinbase)
-                )
-            } catch (e) {
-                console.log(e)
-            }
-            console.log(transaction)
-            // tronWeb.trx.sign(transaction);
-            */
 
-            /* RRR
-            let gasPriceAverage = '6'
-            const gasPrice = await axios.get(`https://ethgasstation.info/json/ethgasAPI.json`)
-            if (gasPrice !== null) gasPriceAverage = '' + (gasPrice.data.average / 10)
-
-            const transactionObj = {
-                from: this.web3.coinbase,
-                to: this.gameCurrent.contractAddress,
-                value: Number(this.gameCurrent.ticketPrice * 10e17).toString(16),
-                gas: Number(350000).toString(16),
-                gasPrice: Number(gasPriceAverage * 10e8).toString(16),
-                // value: web3.utils.toWei('' + this.gameCurrent.ticketPrice, 'ether'),
-                // gas: '350000',
-                // gasPrice: web3.utils.toWei(gasPriceAverage, 'gwei'),
-                data: this.dataString
-            }
-            */
-            /*            
-            try {
-                // await window.ethereum.send('eth_sendTransaction', transactionObj)
-            } catch(error) {
-                this.newNotify({ type: 'error', title: '<b>:: Play ::</b>', text: error.message })
-                return
-            }
-            */
-           /*
-            window.ethereum.sendAsync({ 
-                    method: 'eth_sendTransaction', 
-                    params: [transactionObj],
-                    from: this.web3.coinbase
-                    },
-                    (error, result) => {
-                        if (error) {
-                            this.newNotify({ type: 'error', title: '<b>:: Play ::</b>', text: error.message })
-                        } else {
-                            this.newNotify({ type: 'success', title: '<b>:: Play ::</b>', text: `Transaction successfully sent!`  })
-                        }
-                    })
-            */
-            // this.newNotify({ type: 'success', title: '<b>:: Play ::</b>', text: `Transaction successfully sent!`  })
         },
         doCopyAddress () {
             this.$copyText(this.gameCurrent.contractAddress)
